@@ -1,10 +1,6 @@
-# ⚠️  TanStack Start requires a Node.js server runtime
+# ⚠️  This project is built for CLOUDFLARE WORKERS
 # 
-# This project is optimized for VERCEL (vercel.json is pre-configured)
+# Deploy using: wrangler deploy
 # 
-# For Netlify deployment, you would need:
-# - Convert to client-side only (not SSR)
-# - Use Netlify Edge Functions (advanced)
-# 
-# RECOMMENDED: Deploy to Vercel instead
-# Run: vercel deploy
+# Vercel and Netlify require a different build configuration.
+# This app uses Cloudflare's tooling (@cloudflare/vite-plugin, wrangler.jsonc)

@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite"
+    "_comment": "This app is built for Cloudflare Workers, not Vercel. Deploy to Cloudflare instead: wrangler deploy",
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist/client"
 }
