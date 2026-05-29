@@ -1,12 +1,10 @@
-[build]
-  command = "bun run build"
-  publish = "dist"
-
-[build.environment]
-  NODE_VERSION = "22"
-
-# SPA routing - serve index.html for all routes except static assets
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# ⚠️  TanStack Start requires a Node.js server runtime
+# 
+# This project is optimized for VERCEL (vercel.json is pre-configured)
+# 
+# For Netlify deployment, you would need:
+# - Convert to client-side only (not SSR)
+# - Use Netlify Edge Functions (advanced)
+# 
+# RECOMMENDED: Deploy to Vercel instead
+# Run: vercel deploy
