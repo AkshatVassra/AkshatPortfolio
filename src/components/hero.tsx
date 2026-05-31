@@ -124,7 +124,7 @@ export function Hero() {
           className="text-base mb-8 max-w-xl mx-auto leading-relaxed"
           style={{ color: 'rgba(255,255,255,0.6)' }}
         >
-          B.Tech CSE/AIML · Scalable web apps & immersive games · National Hackathon winner (SIH 2024 & 2025) · Turning ideas into exceptional digital products.
+          A technology enthusiast skilled in Java, C++, JavaScript, Full-Stack Development, and AI-driven applications. I am committed to creating impactful software solutions and continuously expanding my technical expertise.
         </motion.p>
 
         {/* CTAs */}
