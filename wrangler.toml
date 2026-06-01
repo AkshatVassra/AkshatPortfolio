@@ -1,0 +1,9 @@
+name = "akshatxportfolio-worker"
+compatibility_date = "2026-06-01"
+# account_id is provided at publish time via the CLI/env. Remove or set locally if desired.
+
+[site]
+bucket = "./dist"
+
+[build]
+command = "npm run build"
