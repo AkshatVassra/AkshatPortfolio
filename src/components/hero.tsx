@@ -173,7 +173,7 @@ export function Hero() {
         >
           A technology enthusiast skilled in Java, C++, JavaScript, Full-Stack Development, and
           AI-driven applications. I am committed to creating impactful software solutions and
-          continuously expanding my technical expertise.
+          continuously expanding my technical expertise by building innovative projects.
         </motion.p>
 
         {/* CTAs */}
