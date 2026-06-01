@@ -25,6 +25,7 @@ jobs:
       - name: Publish Worker with static assets (Workers Site)
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          WRANGLER_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
-          npx wrangler@3 publish --config wrangler.toml --account-id $CF_ACCOUNT_ID
+          npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json --account-id $CF_ACCOUNT_ID

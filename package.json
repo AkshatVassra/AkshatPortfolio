@@ -9,7 +9,7 @@
         "build:dev": "vite build --mode development",
         "preview": "vite preview",
         "deploy:vercel": "npx vercel --prod --yes",
-        "deploy:cloudflare": "npm run build && npx wrangler pages publish ./dist --project-name tanstack-start-app",
+        "deploy:cloudflare": "npm run build && npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json",
         "lint": "eslint .",
         "format": "prettier --write ."
     },

@@ -1,4 +1,4 @@
-# Deploying this project to Cloudflare Pages
+# Deploying this project to Cloudflare via Cloudflare Workers
 
 Prerequisites:
 - A Cloudflare account
@@ -8,8 +8,8 @@ Steps:
 
 1. Create a Cloudflare API token:
    - Go to the Cloudflare dashboard → My Profile → API Tokens → Create Token.
-   - Use the "Edit Cloudflare Pages" template or grant these permissions:
-     - Account:Pages (Edit)
+   - Use a token with these permissions:
+     - Account:Workers (Edit)
      - Account:Account Settings (Read)
    - Save the token.
 
@@ -18,14 +18,15 @@ Steps:
    - `CF_ACCOUNT_ID` = your Cloudflare account ID (found on the Cloudflare dashboard)
 
 3. Push to `main` (or run the workflow manually):
-   - The workflow at `.github/workflows/deploy-cloudflare-pages.yml` runs on push to `main`.
+   - The workflow at `.github/workflows/deploy-cloudflare-worker.yml` runs on push to `main`.
 
 4. Optional: deploy from your machine:
 
 ```powershell
-npm run deploy:cloudflare
+npm run build
+npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json --account-id <YOUR_ACCOUNT_ID>
 ```
 
 Notes:
-- The workflow uses `npx wrangler pages publish ./dist --project-name akshatxportfolio`.
-- Ensure the build output is `dist` (Vite default); change `pages_build_output_dir` in `wrangler.jsonc` if needed.
+- The workflow publishes the worker with `dist/server/index.js` and assets from `dist/client`.
+- The generated config file is `dist/server/wrangler.json`.

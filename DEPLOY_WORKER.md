@@ -16,15 +16,15 @@ Setup:
 
 What the workflow does:
 - Runs `npm ci` and `npm run build`.
-- Runs `npx wrangler publish ./dist --name akshatxportfolio-worker --account-id $CF_ACCOUNT_ID` to publish the worker along with static assets.
+- Runs `npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json --account-id $CF_ACCOUNT_ID` to publish the worker along with static assets.
 
 Local deploy (optional):
 
 ```powershell
 npm run build
-npx wrangler@3 publish ./dist --name akshatxportfolio-worker --account-id <YOUR_ACCOUNT_ID>
+npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json --account-id <YOUR_ACCOUNT_ID>
 ```
 
 Notes:
-- The worker name is `akshatxportfolio-worker` — change it in `.github/workflows/deploy-cloudflare-worker.yml` if you prefer a different name.
-- If you need custom Worker code (e.g., request routing), we can add a `worker/` source with `wrangler.toml` and a JS/TS entrypoint.
+- The worker uses the generated `dist/server/wrangler.json` config, which points at the `dist/client` asset directory.
+- If you need custom Worker code (e.g., request routing), we can optionally add a `worker/` source and a matching Wrangler config.
