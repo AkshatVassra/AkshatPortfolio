@@ -12,7 +12,11 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  cloudflare: false,
   vite: {
+    build: {
+      outDir: "dist/client",
+    },
     server: {
       host: "0.0.0.0",
       port: 5000,

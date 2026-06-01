@@ -1,0 +1,1 @@
+Removing package-lock.json to stop Pages using bun; delete if approved.
