@@ -1,5 +1,18 @@
 {
-    "_comment": "This app is built for Cloudflare Workers, not Vercel. Deploy to Cloudflare instead: wrangler deploy",
-    "buildCommand": "npm run build",
-    "outputDirectory": "dist/client"
+    "version": 3,
+    "builds": [{
+        "src": "package.json",
+        "use": "@vercel/static-build",
+        "config": {
+            "distDir": "dist/client"
+        }
+    }],
+    "routes": [{
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
+        }
+    ]
 }

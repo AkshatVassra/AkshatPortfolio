@@ -1,6 +1,8 @@
-# ⚠️  This project is built for CLOUDFLARE WORKERS
-# 
-# Deploy using: wrangler deploy
-# 
-# Vercel and Netlify require a different build configuration.
-# This app uses Cloudflare's tooling (@cloudflare/vite-plugin, wrangler.jsonc)
+[build]
+  command = "npm run build"
+  publish = "dist/client"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
