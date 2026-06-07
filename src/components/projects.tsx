@@ -29,7 +29,7 @@ const projects = [
     subtitle: 'AI-Powered Project Risk Dashboard (SIH 2025)',
     description: 'Designed and built a dashboard-based AI prototype predicting cost overruns and timeline delays in large-scale power transmission projects using regression and anomaly detection models. Processed project data and visualized predictions for stakeholder reporting.',
     skills: ['Python', 'Machine Learning', 'Pandas', 'Scikit-learn', 'Data Visualization'],
-    link: 'https://powergridcp.netlify.app',
+    link: 'https://powergridcostcp.vercel.app/',
     highlight: true,
   },
   {
