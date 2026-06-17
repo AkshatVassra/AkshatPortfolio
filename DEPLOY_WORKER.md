@@ -1,10 +1,10 @@
-# Deploying this project as a Cloudflare Pages project
+# Deploying this project as a Cloudflare Worker (with Assets)
 
-This deploys the built `dist/client` folder as a Cloudflare Pages project with SSR support.
+This deploys the built project as a Cloudflare Worker that serves static client assets and handles SSR (Server-Side Rendering).
 
 Requirements:
 - Cloudflare account and `CF_ACCOUNT_ID`
-- Cloudflare API token with `Account.Cloudflare Pages` (Edit) permission
+- Cloudflare API token with `Account.Workers` (Edit) permission
 - GitHub repo with Actions enabled
 
 Setup:
@@ -16,15 +16,16 @@ Setup:
 
 What the workflow does:
 - Runs `npm ci` and `npm run build`.
-- Runs `npx wrangler@3 pages deploy dist/client --project-name=akshatxportfolio` to deploy the pages project.
+- Runs `npx wrangler deploy` to publish the worker and the associated static assets.
 
 Local deploy (optional):
 
 ```powershell
 npm run build
-npx wrangler@3 pages deploy dist/client --project-name=akshatxportfolio
+npx wrangler deploy
 ```
 
 Notes:
 - The build outputs client assets to `dist/client/` and server functions to `dist/server/`.
-- The `wrangler.jsonc` config at the project root sets `pages_build_output_dir: "dist"`.
+- The `wrangler.jsonc` config at the project root maps the entry point `src/server.ts` and the static assets directory `dist/client`.
+- During the Vite build, `@cloudflare/vite-plugin` compiles the code and generates the final configuration that Wrangler uses.

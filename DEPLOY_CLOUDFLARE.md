@@ -1,4 +1,4 @@
-# Deploying this project to Cloudflare via Cloudflare Pages
+# Deploying this project to Cloudflare via Cloudflare Workers (with Assets)
 
 Prerequisites:
 - A Cloudflare account
@@ -9,8 +9,8 @@ Steps:
 1. Create a Cloudflare API token:
    - Go to the Cloudflare dashboard → My Profile → API Tokens → Create Token.
    - Use a token with these permissions:
-     - Account:Cloudflare Pages (Edit)
-     - Account:Account Settings (Read)
+     - Account: Workers (Edit)
+     - Account: Account Settings (Read)
    - Save the token.
 
 2. Add GitHub secrets to your repository (Settings → Secrets & variables → Actions):
@@ -24,9 +24,10 @@ Steps:
 
 ```powershell
 npm run build
-npx wrangler@3 pages deploy dist/client --project-name=akshatxportfolio
+npx wrangler deploy
 ```
 
 Notes:
-- The workflow deploys the built `dist/client` directory as a Cloudflare Pages project.
-- The project name is `akshatxportfolio` (matching `wrangler.jsonc`).
+- The build outputs client assets to `dist/client/` and server functions to `dist/server/`.
+- The `wrangler.jsonc` config at the project root is configured as a Worker with Assets (the modern standard for TanStack Start).
+- Wrangler dynamically handles the build configuration and assets directory mapping.
