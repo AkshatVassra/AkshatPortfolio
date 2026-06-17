@@ -9,7 +9,7 @@
         "build:dev": "vite build --mode development",
         "preview": "vite preview",
         "deploy:vercel": "npx vercel --prod --yes",
-        "deploy:cloudflare": "npm run build && npx wrangler@3 deploy dist/server/index.js --config dist/server/wrangler.json",
+        "deploy:cloudflare": "npm run build && npx wrangler@3 pages deploy dist/client --project-name=akshatxportfolio",
         "lint": "eslint .",
         "format": "prettier --write ."
     },

@@ -1,4 +1,4 @@
-# Deploying this project to Cloudflare via Cloudflare Workers
+# Deploying this project to Cloudflare via Cloudflare Pages
 
 Prerequisites:
 - A Cloudflare account
@@ -9,7 +9,7 @@ Steps:
 1. Create a Cloudflare API token:
    - Go to the Cloudflare dashboard → My Profile → API Tokens → Create Token.
    - Use a token with these permissions:
-     - Account:Workers (Edit)
+     - Account:Cloudflare Pages (Edit)
      - Account:Account Settings (Read)
    - Save the token.
 
@@ -24,9 +24,9 @@ Steps:
 
 ```powershell
 npm run build
-npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json --account-id <YOUR_ACCOUNT_ID>
+npx wrangler@3 pages deploy dist/client --project-name=akshatxportfolio
 ```
 
 Notes:
-- The workflow publishes the worker with `dist/server/index.js` and assets from `dist/client`.
-- The generated config file is `dist/server/wrangler.json`.
+- The workflow deploys the built `dist/client` directory as a Cloudflare Pages project.
+- The project name is `akshatxportfolio` (matching `wrangler.jsonc`).

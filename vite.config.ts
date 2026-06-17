@@ -14,9 +14,6 @@ export default defineConfig({
   },
   cloudflare: true,
   vite: {
-    build: {
-      outDir: "dist/client",
-    },
     server: {
       host: "0.0.0.0",
       port: 5000,

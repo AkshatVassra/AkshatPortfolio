@@ -1,10 +1,10 @@
-# Deploying this project as a standalone Cloudflare Worker
+# Deploying this project as a Cloudflare Pages project
 
-This deploys the built static `dist` folder as a Worker that serves your static site.
+This deploys the built `dist/client` folder as a Cloudflare Pages project with SSR support.
 
 Requirements:
 - Cloudflare account and `CF_ACCOUNT_ID`
-- Cloudflare API token with `Account.Workers` (Edit) and `Account. Workers KV` if using KV (not required here)
+- Cloudflare API token with `Account.Cloudflare Pages` (Edit) permission
 - GitHub repo with Actions enabled
 
 Setup:
@@ -16,15 +16,15 @@ Setup:
 
 What the workflow does:
 - Runs `npm ci` and `npm run build`.
-- Runs `npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json --account-id $CF_ACCOUNT_ID` to publish the worker along with static assets.
+- Runs `npx wrangler@3 pages deploy dist/client --project-name=akshatxportfolio` to deploy the pages project.
 
 Local deploy (optional):
 
 ```powershell
 npm run build
-npx wrangler@3 publish dist/server/index.js --config dist/server/wrangler.json --account-id <YOUR_ACCOUNT_ID>
+npx wrangler@3 pages deploy dist/client --project-name=akshatxportfolio
 ```
 
 Notes:
-- The worker uses the generated `dist/server/wrangler.json` config, which points at the `dist/client` asset directory.
-- If you need custom Worker code (e.g., request routing), we can optionally add a `worker/` source and a matching Wrangler config.
+- The build outputs client assets to `dist/client/` and server functions to `dist/server/`.
+- The `wrangler.jsonc` config at the project root sets `pages_build_output_dir: "dist"`.
