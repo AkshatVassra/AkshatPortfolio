@@ -171,7 +171,7 @@ export function Hero() {
           className="text-base mb-8 max-w-xl mx-auto leading-relaxed"
           style={{ color: "rgba(255,255,255,0.6)" }}
         >
-          A technology enthusiast skilled in Java, C++, JavaScript, Full-Stack Development, and
+          A Technology enthusiast skilled in Java, C++, JavaScript, Full-Stack Development, and
           AI-driven applications. I am committed to creating impactful software solutions and
           continuously expanding my technical expertise by building innovative projects.
         </motion.p>
