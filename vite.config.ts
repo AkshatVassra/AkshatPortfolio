@@ -12,7 +12,7 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
-  cloudflare: false,
+  cloudflare: true,
   vite: {
     build: {
       outDir: "dist/client",
