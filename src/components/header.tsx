@@ -35,7 +35,7 @@ export function Header() {
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="font-bold text-2xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+          className="font-bold text-2xl bg-linear-to-r from-primary to-accent bg-clip-text text-transparent"
         >
           AV
         </motion.div>
@@ -46,7 +46,7 @@ export function Header() {
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
-              whileHover={{ color: '#06b6d4' }}
+              whileHover={{ color: 'oklch(0.62 0.26 29)' }}
               className="text-sm font-medium text-foreground-secondary hover:text-accent transition-colors"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -62,9 +62,9 @@ export function Header() {
           href="https://drive.google.com/file/d/1AVbDDr-rWNSVQh9ra7BdKIUIPsqRMinc/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(168, 85, 247, 0.5)' }}
+          whileHover={{ scale: 1.05, boxShadow: '0 0 20px oklch(0.62 0.26 29 / 0.6)' }}
           whileTap={{ scale: 0.95 }}
-          className="hidden md:block px-6 py-2 bg-gradient-to-r from-primary to-pink-500 text-white rounded-lg font-medium transition-all duration-300"
+          className="hidden md:block px-6 py-2 bg-linear-to-r from-primary to-accent text-white rounded-lg font-medium transition-all duration-300"
         >
           Resume
         </motion.a>

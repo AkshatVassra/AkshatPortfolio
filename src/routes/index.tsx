@@ -50,10 +50,10 @@ function Home() {
         animate={{ opacity: loaded ? 1 : 0 }}
         transition={{ duration: 0.6, ease: 'easeIn' }}
       >
-      <ScrollVideoBackground />
-      <MotionBackground />
-      <Header />
-      <Hero />
+        <ScrollVideoBackground />
+        <MotionBackground />
+        <Header />
+        <Hero />
 
 
       <AnimatedSection id="about" className="py-24 px-6 relative overflow-hidden">

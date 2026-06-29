@@ -68,7 +68,7 @@ export function ScrollVideoBackground() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 120% 80% at 50% 40%, oklch(0.18 0.06 295) 0%, oklch(0.08 0.03 270) 60%, oklch(0.05 0.02 260) 100%)',
+              'radial-gradient(ellipse 120% 80% at 50% 40%, oklch(0.05 0 0) 0%, oklch(0 0 0) 60%, oklch(0 0 0) 100%)',
           }}
         />
 
@@ -77,8 +77,8 @@ export function ScrollVideoBackground() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(oklch(0.66 0.24 305 / 0.12) 1px, transparent 1px),
-              linear-gradient(90deg, oklch(0.66 0.24 305 / 0.12) 1px, transparent 1px)
+              linear-gradient(oklch(0.62 0.26 29 / 0.12) 1px, transparent 1px),
+              linear-gradient(90deg, oklch(0.62 0.26 29 / 0.12) 1px, transparent 1px)
             `,
             backgroundSize: '48px 48px',
           }}
@@ -89,8 +89,8 @@ export function ScrollVideoBackground() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(oklch(0.82 0.16 200 / 0.07) 1px, transparent 1px),
-              linear-gradient(90deg, oklch(0.82 0.16 200 / 0.07) 1px, transparent 1px)
+              linear-gradient(oklch(0.45 0.2 29 / 0.07) 1px, transparent 1px),
+              linear-gradient(90deg, oklch(0.45 0.2 29 / 0.07) 1px, transparent 1px)
             `,
             backgroundSize: '192px 192px',
           }}
@@ -104,7 +104,7 @@ export function ScrollVideoBackground() {
             height: 700,
             top: '-15%',
             left: '-10%',
-            background: 'radial-gradient(circle, oklch(0.66 0.24 305 / 0.22) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, oklch(0.62 0.26 29 / 0.22) 0%, transparent 70%)',
             filter: 'blur(40px)',
           }}
         />
@@ -115,7 +115,7 @@ export function ScrollVideoBackground() {
             height: 600,
             bottom: '-10%',
             right: '-8%',
-            background: 'radial-gradient(circle, oklch(0.82 0.16 200 / 0.18) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, oklch(0.45 0.2 29 / 0.18) 0%, transparent 70%)',
             filter: 'blur(50px)',
           }}
         />
@@ -126,7 +126,7 @@ export function ScrollVideoBackground() {
             height: 400,
             top: '30%',
             left: '55%',
-            background: 'radial-gradient(circle, oklch(0.72 0.22 330 / 0.14) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, oklch(0.62 0.26 29 / 0.14) 0%, transparent 70%)',
             filter: 'blur(60px)',
           }}
         />
@@ -143,12 +143,12 @@ export function ScrollVideoBackground() {
               left: `${(i * 11.7) % 100}%`,
               background:
                 i % 3 === 0
-                  ? 'oklch(0.82 0.16 200 / 0.8)'
-                  : 'oklch(0.66 0.24 305 / 0.7)',
+                  ? 'oklch(0.45 0.2 29 / 0.8)'
+                  : 'oklch(0.62 0.26 29 / 0.7)',
               boxShadow:
                 i % 5 === 0
-                  ? '0 0 6px oklch(0.82 0.16 200 / 0.9)'
-                  : '0 0 3px oklch(0.66 0.24 305 / 0.6)',
+                  ? '0 0 6px oklch(0.45 0.2 29 / 0.9)'
+                  : '0 0 3px oklch(0.62 0.26 29 / 0.6)',
             }}
           />
         ))}
@@ -163,7 +163,7 @@ export function ScrollVideoBackground() {
               left: `${[5, 20, 10, 15, 8][i]}%`,
               width: `${[30, 25, 40, 20, 35][i]}%`,
               height: 1,
-              background: `linear-gradient(90deg, transparent, oklch(${i % 2 === 0 ? '0.82 0.16 200' : '0.66 0.24 305'} / 0.4), transparent)`,
+              background: `linear-gradient(90deg, transparent, oklch(${i % 2 === 0 ? '0.55 0.3 29' : '0.7 0.3 340'} / 0.4), transparent)`,
             }}
           />
         ))}
@@ -176,7 +176,7 @@ export function ScrollVideoBackground() {
               right: `${[5, 12, 8, 18][i]}%`,
               width: `${[28, 22, 35, 25][i]}%`,
               height: 1,
-              background: `linear-gradient(270deg, transparent, oklch(${i % 2 === 0 ? '0.66 0.24 305' : '0.82 0.16 200'} / 0.35), transparent)`,
+              background: `linear-gradient(270deg, transparent, oklch(${i % 2 === 0 ? '0.7 0.3 340' : '0.55 0.3 29'} / 0.35), transparent)`,
             }}
           />
         ))}
@@ -191,7 +191,7 @@ export function ScrollVideoBackground() {
               top: `${[10, 25, 5, 30, 15][i]}%`,
               width: 1,
               height: `${[25, 20, 30, 22, 28][i]}%`,
-              background: `linear-gradient(180deg, transparent, oklch(${i % 2 === 0 ? '0.82 0.16 200' : '0.66 0.24 305'} / 0.35), transparent)`,
+              background: `linear-gradient(180deg, transparent, oklch(${i % 2 === 0 ? '0.55 0.3 29' : '0.7 0.3 340'} / 0.35), transparent)`,
             }}
           />
         ))}
@@ -207,7 +207,7 @@ export function ScrollVideoBackground() {
               fontWeight: 900,
               letterSpacing: '-0.05em',
               background:
-                'linear-gradient(135deg, oklch(0.66 0.24 305 / 0.06), oklch(0.82 0.16 200 / 0.06))',
+                'linear-gradient(135deg, oklch(0.62 0.26 29 / 0.06), oklch(0.45 0.2 29 / 0.06))',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -223,7 +223,7 @@ export function ScrollVideoBackground() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, oklch(0.05 0.02 260 / 0.5) 100%)',
+              'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, oklch(0 0 0 / 0.5) 100%)',
           }}
         />
       </div>
@@ -245,7 +245,7 @@ export function ScrollVideoBackground() {
       </div>
 
       {/* Shared overlay for readability */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/50" />
     </div>
   );
 }

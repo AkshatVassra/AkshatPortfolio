@@ -84,7 +84,7 @@ export function TechStackFun() {
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, oklch(0.66 0.24 305 / 0.25) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, oklch(0.55 0.2 29 / 0.25) 0%, transparent 70%)',
           }}
         />
       </div>
@@ -161,8 +161,8 @@ export function TechStackFun() {
                 className="w-28 h-28 rounded-full border-2 border-accent/50 flex flex-col items-center justify-center font-mono text-center"
                 style={{
                   background:
-                    'radial-gradient(circle, oklch(0.66 0.24 305 / 0.35) 0%, oklch(0.12 0.04 295) 70%)',
-                  boxShadow: '0 0 40px oklch(0.66 0.24 305 / 0.35)',
+                    'radial-gradient(circle, oklch(0.55 0.2 29 / 0.35) 0%, oklch(0.05 0 0) 70%)',
+                  boxShadow: '0 0 40px oklch(0.55 0.2 29 / 0.35)',
                 }}
               >
                 <Zap className="text-accent mb-1" size={22} />
@@ -225,8 +225,8 @@ export function TechStackFun() {
               whileTap={{ scale: 0.98 }}
               className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white disabled:opacity-70"
               style={{
-                background: 'linear-gradient(135deg, #a855f7, #06b6d4)',
-                boxShadow: '0 0 24px rgba(168, 85, 247, 0.35)',
+                background: 'linear-gradient(135deg, oklch(0.62 0.26 29), oklch(0.45 0.2 29))',
+                boxShadow: '0 0 24px oklch(0.62 0.26 29 / 0.5)',
               }}
             >
               {spinning ? (

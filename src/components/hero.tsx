@@ -41,7 +41,7 @@ function TypewriterRole() {
     <span
       className="font-mono"
       style={{
-        background: "linear-gradient(90deg,#a855f7,#06b6d4)",
+        background: "linear-gradient(90deg, oklch(0.62 0.26 29), oklch(0.45 0.2 29))",
         WebkitBackgroundClip: "text",
         backgroundClip: "text",
         WebkitTextFillColor: "transparent",
@@ -55,7 +55,7 @@ function TypewriterRole() {
           display: "inline-block",
           width: 2,
           height: "0.9em",
-          background: "#06b6d4",
+          background: "oklch(0.45 0.2 29)",
           marginLeft: 2,
           verticalAlign: "middle",
         }}
@@ -103,15 +103,15 @@ export function Hero() {
               key={label}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border"
               style={{
-                borderColor: c === 0 ? "rgba(168,85,247,0.5)" : "rgba(6,182,212,0.5)",
-                color: c === 0 ? "#a855f7" : "#06b6d4",
-                background: c === 0 ? "rgba(168,85,247,0.09)" : "rgba(6,182,212,0.09)",
+                borderColor: c === 0 ? "oklch(0.62 0.26 29 / 0.5)" : "oklch(0.45 0.2 29 / 0.5)",
+                color: c === 0 ? "oklch(0.62 0.26 29)" : "oklch(0.45 0.2 29)",
+                background: c === 0 ? "oklch(0.62 0.26 29 / 0.09)" : "oklch(0.45 0.2 29 / 0.09)",
               }}
             >
               <span>{icon}</span>
               {label}
             </span>
-          ))}
+          ))})
         </motion.div>
 
         {/* Name */}
@@ -128,7 +128,7 @@ export function Hero() {
           >
             <span
               style={{
-                backgroundImage: "linear-gradient(135deg,#a855f7 0%,#ec4899 50%,#06b6d4 100%)",
+                backgroundImage: "linear-gradient(135deg, oklch(0.62 0.26 29) 0%, oklch(0.45 0.2 29) 50%, oklch(0.45 0.2 29) 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -139,7 +139,7 @@ export function Hero() {
             </span>
             <span
               style={{
-                backgroundImage: "linear-gradient(135deg,#06b6d4 0%,#a855f7 50%,#ec4899 100%)",
+                backgroundImage: "linear-gradient(135deg, oklch(0.45 0.2 29) 0%, oklch(0.62 0.26 29) 50%, oklch(0.45 0.2 29) 100%)",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -190,7 +190,7 @@ export function Hero() {
             whileTap={{ scale: 0.97 }}
             className="group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg font-semibold text-white"
             style={{
-              background: "linear-gradient(135deg,#a855f7,#ec4899)",
+              background: "linear-gradient(135deg, oklch(0.62 0.26 29), oklch(0.45 0.2 29))",
               willChange: "transform",
             }}
           >
@@ -204,8 +204,8 @@ export function Hero() {
             href="#contact"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg border-2 font-semibold transition-colors duration-150 hover:bg-cyan-400/10"
-            style={{ borderColor: "#06b6d4", color: "#06b6d4", willChange: "transform" }}
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg border-2 font-semibold transition-colors duration-150 hover:bg-red-400/10"
+            style={{ borderColor: "oklch(0.45 0.2 29)", color: "oklch(0.45 0.2 29)", willChange: "transform" }}
           >
             Get In Touch <ArrowRight size={17} />
           </motion.a>
@@ -226,8 +226,8 @@ export function Hero() {
               transition={{ duration: 0.15 }}
               className="p-3.5 rounded-xl border text-center"
               style={{
-                background: "rgba(168,85,247,0.06)",
-                borderColor: "rgba(168,85,247,0.22)",
+                background: "oklch(0.62 0.26 29 / 0.06)",
+                borderColor: "oklch(0.62 0.26 29 / 0.22)",
                 willChange: "transform",
               }}
             >
@@ -235,7 +235,7 @@ export function Hero() {
               <p className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>
                 {s.label}
               </p>
-              <p className="text-base font-bold" style={{ color: "#a855f7" }}>
+              <p className="text-base font-bold" style={{ color: "oklch(0.62 0.26 29)" }}>
                 {s.value}
               </p>
             </motion.div>
@@ -251,13 +251,13 @@ export function Hero() {
         >
           <div
             className="w-6 h-10 border-2 rounded-full flex items-start justify-center p-2"
-            style={{ borderColor: "rgba(168,85,247,0.4)" }}
+            style={{ borderColor: "oklch(0.62 0.26 29 / 0.4)" }}
           >
             <motion.div
               animate={{ y: [0, 5, 0] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
               className="w-1 h-2 rounded-full"
-              style={{ background: "#a855f7" }}
+              style={{ background: "oklch(0.62 0.26 29)" }}
             />
           </div>
         </motion.div>

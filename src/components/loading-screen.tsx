@@ -48,7 +48,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < cols; i++) {
-        ctx.fillStyle = i % 4 === 0 ? '#06b6d4' : 'rgba(168,85,247,0.5)';
+        ctx.fillStyle = i % 4 === 0 ? 'oklch(0.45 0.2 29)' : 'oklch(0.62 0.26 29 / 0.5)';
         ctx.fillText(CHARS[Math.floor(Math.random() * CHARS.length)], i * FS, drops[i] * FS);
         if (drops[i] * FS > canvas.height && Math.random() > 0.97) drops[i] = 0;
         drops[i] += 0.7;
@@ -113,7 +113,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.03 }}
           transition={{ duration: 0.45, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden select-none"
+          className="fixed inset-0 z-9999 flex flex-col items-center justify-center overflow-hidden select-none"
           style={{ background: '#020408', willChange: 'opacity' }}
         >
           {/* Matrix rain */}
@@ -206,7 +206,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
               <motion.span
                 animate={{ opacity: [1, 0] }}
                 transition={{ duration: 0.5, repeat: Infinity }}
-                className="inline-block w-[6px] h-[12px]"
+                className="inline-block w-1.5 h-3"
                 style={{ background: 'rgba(134,239,172,0.75)' }}
               />
             </div>
@@ -225,8 +225,8 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                   className="absolute inset-y-0 left-0 rounded-full"
                   style={{
                     width: `${progress}%`,
-                    background: 'linear-gradient(90deg,#a855f7,#06b6d4)',
-                    boxShadow: '0 0 8px rgba(6,182,212,0.6)',
+                    background: 'linear-gradient(90deg, oklch(0.62 0.26 29), oklch(0.45 0.2 29))',
+                    boxShadow: '0 0 8px oklch(0.45 0.2 29 / 0.6)',
                     transition: 'width 0.05s linear',
                     willChange: 'width',
                   }}
@@ -235,7 +235,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
               <div className="flex justify-between font-mono text-[9px]">
                 {[0,25,50,75,100].map(t => (
-                  <span key={t} style={{ color: progress >= t ? 'rgba(6,182,212,0.6)' : 'rgba(168,85,247,0.25)' }}>{t}</span>
+                  <span key={t} style={{ color: progress >= t ? 'oklch(0.45 0.2 29 / 0.6)' : 'oklch(0.62 0.26 29 / 0.25)' }}>{t}</span>
                 ))}
               </div>
             </div>
