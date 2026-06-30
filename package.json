@@ -1,5 +1,5 @@
 {
-    "name": "tanstack_start_ts",
+    "name": "tanstack-start-ts",
     "private": true,
     "engines": {
         "node": ">=22"
