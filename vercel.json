@@ -1,7 +1,12 @@
 {
     "version": 2,
-    "outputDirectory": "dist/client",
-    "routes": [{
+    "outputDirectory": "dist",
+    "routes": [
+        {
+            "src": "/(.*\\.(ico|png|jpg|jpeg|svg|mp4|pdf|webp|gif|css|js|woff|woff2))$",
+            "dest": "/client/$1"
+        },
+        {
             "handle": "filesystem"
         },
         {
