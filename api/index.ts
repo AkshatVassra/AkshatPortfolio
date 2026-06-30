@@ -2,7 +2,7 @@ export const config = {
   runtime: "nodejs",
 };
 
-import serverModule from "../dist/client/server/server.js";
+import serverModule from "../dist/server/index.js";
 
 const server = serverModule.default ?? serverModule;
 
