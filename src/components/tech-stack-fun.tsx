@@ -1,307 +1,298 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { Sparkles, Zap, Server, Globe, Cpu, Database, Code2, Layers, Terminal, Braces } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useMemo, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, Zap, Shuffle } from 'lucide-react';
 
-const TECH_STACK = [
-  { name: 'React', icon: '⚛️', category: 'Frontend', power: 96, color: '#61dafb' },
-  { name: 'TypeScript', icon: '📘', category: 'Language', power: 94, color: '#3178c6' },
-  { name: 'Node.js', icon: '🟢', category: 'Backend', power: 92, color: '#68a063' },
-  { name: 'Python', icon: '🐍', category: 'Language', power: 95, color: '#ffd43b' },
-  { name: 'MongoDB', icon: '🍃', category: 'Database', power: 88, color: '#4db33d' },
-  { name: 'TensorFlow', icon: '🧠', category: 'AI/ML', power: 90, color: '#ff6f00' },
-  { name: 'Docker', icon: '🐳', category: 'DevOps', power: 87, color: '#2496ed' },
-  { name: 'Git', icon: '🔀', category: 'Tools', power: 99, color: '#f05032' },
-  { name: 'Tailwind', icon: '🎨', category: 'Frontend', power: 91, color: '#38bdf8' },
-  { name: 'Framer', icon: '✨', category: 'Motion', power: 89, color: '#a855f7' },
+type TechItem = {
+  name: string;
+  icon: string;
+  category: string;
+  vibe: string;
+  power: number;
+  color: string;
+};
+
+const TECH_STACK: TechItem[] = [
+  { name: 'React', icon: '⚛️', category: 'Frontend', vibe: 'Component chaos, beautifully tamed', power: 96, color: '#61dafb' },
+  { name: 'TypeScript', icon: '📘', category: 'Language', vibe: 'Catches bugs before you ship them', power: 94, color: '#3178c6' },
+  { name: 'Node.js', icon: '🟢', category: 'Backend', vibe: 'JavaScript on both ends — no mercy', power: 92, color: '#68a063' },
+  { name: 'Python', icon: '🐍', category: 'Language', vibe: 'ML pipelines & scripts in one breath', power: 95, color: '#ffd43b' },
+  { name: 'MongoDB', icon: '🍃', category: 'Database', vibe: 'Documents flex harder than JSON', power: 88, color: '#4db33d' },
+  { name: 'TensorFlow', icon: '🧠', category: 'AI/ML', vibe: 'Neurons go brrr responsibly', power: 90, color: '#ff6f00' },
+  { name: 'Docker', icon: '🐳', category: 'DevOps', vibe: 'It works on my machine → everyone\'s', power: 87, color: '#2496ed' },
+  { name: 'Git', icon: '🔀', category: 'Tools', vibe: 'Time travel for code (use wisely)', power: 99, color: '#f05032' },
+  { name: 'Tailwind', icon: '🎨', category: 'Frontend', vibe: 'Utility classes, infinite power', power: 91, color: '#38bdf8' },
+  { name: 'Framer', icon: '✨', category: 'Motion', vibe: 'Butter-smooth UI animations', power: 89, color: '#a855f7' },
 ];
 
-function BentoCard({ children, className, mousePos }: { children: React.ReactNode, className?: string, mousePos: { x: number, y: number } }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+const COMBOS: Record<string, string> = {
+  'React+TypeScript+Node.js': '🚀 Full-stack express lane — ship features, not excuses.',
+  'Python+TensorFlow+MongoDB': '🤖 AI data pipeline unlocked — models meet real storage.',
+  'React+Tailwind+Framer': '🎬 Frontend cinema mode — pixels with personality.',
+  'Docker+Git+Node.js': '🛠️ Deploy-ready dev loop — commit, containerize, conquer.',
+  'Python+MongoDB+React': '🌐 Data-to-dashboard speedrun — backend brains, frontend face.',
+};
 
-  // 3D Tilt
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 20 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 20 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+function pickCombo(techs: TechItem[]): string {
+  const key = techs
+    .map((t) => t.name)
+    .sort()
+    .join('+');
+  if (COMBOS[key]) return COMBOS[key];
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+  const categories = [...new Set(techs.map((t) => t.category))];
+  if (categories.length === 3) {
+    return `🎯 Triple threat: ${techs.map((t) => t.name).join(' + ')} — cross-domain synergy engaged.`;
+  }
+  return `⚡ ${techs[0].name} × ${techs[1].name} × ${techs[2].name} — experimental stack, dangerously effective.`;
+}
 
-    setHoverPos({ x: mouseX, y: mouseY });
-    
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className={cn("relative rounded-[2rem] bg-card/40 border border-white/10 backdrop-blur-xl overflow-hidden group/bento", className)}
-    >
-      <div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition-opacity duration-300 group-hover/bento:opacity-100"
-        style={{
-          background: `radial-gradient(400px circle at ${hoverPos.x}px ${hoverPos.y}px, rgba(255,255,255,0.08), transparent 40%)`,
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover/bento:opacity-100 border-2 border-primary/40 mix-blend-overlay"
-        style={{
-          maskImage: `radial-gradient(300px circle at ${hoverPos.x}px ${hoverPos.y}px, black, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(300px circle at ${hoverPos.x}px ${hoverPos.y}px, black, transparent 100%)`,
-        }}
-      />
-      <div className="relative z-10 h-full w-full p-8" style={{ transform: "translateZ(30px)" }}>
-        {children}
-      </div>
-    </motion.div>
-  );
+function randomPick<T>(arr: T[], count: number): T[] {
+  const copy = [...arr];
+  const picked: T[] = [];
+  while (picked.length < count && copy.length > 0) {
+    const i = Math.floor(Math.random() * copy.length);
+    picked.push(copy.splice(i, 1)[0]);
+  }
+  return picked;
 }
 
 export function TechStackFun() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [active, setActive] = useState<TechItem | null>(TECH_STACK[0]);
+  const [combo, setCombo] = useState<string | null>(null);
+  const [comboTechs, setComboTechs] = useState<TechItem[]>([]);
+  const [spinning, setSpinning] = useState(false);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const orbitTechs = useMemo(() => TECH_STACK.slice(0, 8), []);
+
+  const spinStack = () => {
+    setSpinning(true);
+    setCombo(null);
+    const picked = randomPick(TECH_STACK, 3);
+    setTimeout(() => {
+      setComboTechs(picked);
+      setCombo(pickCombo(picked));
+      setActive(picked[0]);
+      setSpinning(false);
+    }, 700);
+  };
 
   return (
-    <section id="stack" ref={containerRef} className="py-32 px-6 relative overflow-hidden bg-background">
-      {/* Global Dynamic Spotlight */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(1200px circle at ${mousePos.x}px ${mousePos.y}px, oklch(0.62 0.26 29 / 0.08), transparent 40%)`,
-        }}
-      />
+    <section id="stack" className="py-24 px-6 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-30">
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, oklch(0.55 0.2 29 / 0.25) 0%, transparent 70%)',
+          }}
+        />
+      </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-20 text-center md:text-left flex flex-col items-center md:items-start"
+          viewport={{ once: true }}
+          className="mb-12 text-center md:text-left"
         >
-          <div className="flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-md">
-            <Sparkles className="w-5 h-5 text-primary animate-pulse" />
-            <span className="text-sm font-bold tracking-widest uppercase text-primary">Tech Arsenal</span>
-          </div>
-          <h2 className="text-5xl md:text-7xl font-black mb-8 leading-[1.1] tracking-tight">
-            <span className="block text-foreground">Next-Gen</span>
-            <span className="block bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Stack Architecture
-            </span>
+          <p className="text-accent font-bold text-sm tracking-widest mb-3">TECH ARSENAL</p>
+          <h2 className="text-5xl font-bold mb-4">
+            Stack <span className="text-accent">Playground</span>
           </h2>
-          <p className="text-lg md:text-xl text-foreground/70 max-w-2xl leading-relaxed">
-            A carefully curated ecosystem of modern tools and frameworks designed for speed, scale, and uncompromising user experiences.
+          <p className="text-foreground-secondary text-lg max-w-2xl mx-auto md:mx-0">
+            Hover the orbit, click a tool, or spin for a random power combo — because great devs
+            know their stack and have fun with it.
           </p>
         </motion.div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(320px,auto)]">
-          
-          {/* Main Core Stack (Spans 2 columns, 2 rows) */}
-          <BentoCard mousePos={mousePos} className="md:col-span-2 md:row-span-2 flex flex-col justify-between overflow-visible">
-            <div className="flex justify-between items-start mb-8">
-              <div>
-                <h3 className="text-3xl font-black mb-2 text-foreground">Core Ecosystem</h3>
-                <p className="text-foreground/60 text-lg">The foundation of everything I build.</p>
-              </div>
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 shadow-lg">
-                <Globe className="w-8 h-8 text-primary" />
-              </div>
-            </div>
-
-            <div className="relative h-72 w-full flex items-center justify-center perspective-[1000px] my-8">
-               {/* 3D Orbiting Elements / Abstract Visual */}
-               <motion.div 
-                 animate={{ rotateZ: 360 }}
-                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                 className="absolute w-[280px] h-[280px] md:w-[350px] md:h-[350px] border border-primary/20 rounded-full"
-               />
-               <motion.div 
-                 animate={{ rotateZ: -360, rotateX: 60 }}
-                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                 className="absolute w-[350px] h-[350px] md:w-[450px] md:h-[450px] border border-dashed border-secondary/30 rounded-full"
-               />
-               <div className="absolute w-32 h-32 rounded-full bg-primary/20 blur-[50px]" />
-               <div className="relative z-10 w-24 h-24 bg-background/80 backdrop-blur-xl border border-primary/50 rounded-3xl shadow-[0_0_50px_rgba(var(--color-primary),0.3)] flex items-center justify-center group-hover/bento:scale-110 transition-transform duration-500">
-                 <Code2 className="w-12 h-12 text-primary" />
-               </div>
-               
-               {/* Floating Tech Icons */}
-               {TECH_STACK.slice(0, 6).map((tech, i) => {
-                 const angle = (i / 6) * Math.PI * 2;
-                 const radiusX = 140;
-                 const radiusY = 100;
-                 return (
-                   <motion.div
-                     key={tech.name}
-                     className="absolute w-14 h-14 bg-background/90 border border-white/10 rounded-2xl flex items-center justify-center text-3xl backdrop-blur-md shadow-2xl z-20"
-                     animate={{ 
-                       x: [Math.cos(angle) * radiusX, Math.cos(angle + Math.PI) * radiusX, Math.cos(angle) * radiusX],
-                       y: [Math.sin(angle) * radiusY, Math.sin(angle + Math.PI) * radiusY, Math.sin(angle) * radiusY],
-                       rotate: [0, 180, 360],
-                     }}
-                     transition={{ duration: 30 + i * 2, repeat: Infinity, ease: "linear" }}
-                   >
-                     {tech.icon}
-                   </motion.div>
-                 );
-               })}
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              {['React', 'TypeScript', 'Node.js', 'Python'].map(tech => (
-                <span key={tech} className="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-sm font-semibold hover:bg-primary/20 hover:text-primary hover:border-primary/50 transition-colors cursor-default">
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </BentoCard>
-
-          {/* AI & ML */}
-          <BentoCard mousePos={mousePos} className="flex flex-col justify-between">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h3 className="text-2xl font-bold mb-1 text-foreground">AI Intelligence</h3>
-                <p className="text-sm text-foreground/60">Powering smart features</p>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                <Cpu className="w-6 h-6 text-secondary" />
-              </div>
-            </div>
-            <div className="space-y-6 mt-4">
-              {['TensorFlow', 'Scikit-learn', 'Pandas'].map((tech, i) => (
-                <div key={tech} className="space-y-2 group">
-                  <div className="flex justify-between text-sm">
-                    <span className="font-medium text-foreground/80 group-hover:text-primary transition-colors">{tech}</span>
-                    <span className="text-secondary/80 font-mono tracking-wider">9{i}0%</span>
-                  </div>
-                  <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `9${i}0%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.5, delay: 0.2 * i, ease: "easeOut" }}
-                      className="h-full bg-linear-to-r from-secondary to-primary rounded-full relative" 
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
+          {/* Orbital ring */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative mx-auto w-full max-w-[380px] aspect-square"
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 48, repeat: Infinity, ease: 'linear' }}
+              className="absolute inset-0"
+            >
+              {orbitTechs.map((tech, i) => {
+                const angle = (i / orbitTechs.length) * 360;
+                const isActive = active?.name === tech.name;
+                return (
+                  <div
+                    key={tech.name}
+                    className="absolute left-1/2 top-1/2"
+                    style={{
+                      transform: `rotate(${angle}deg) translateX(150px)`,
+                    }}
+                  >
+                    <motion.button
+                      type="button"
+                      onClick={() => {
+                        setActive(tech);
+                        setCombo(null);
+                      }}
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.95 }}
+                      style={{ transform: `rotate(-${angle}deg)` }}
+                      className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl border text-xs font-mono transition-colors ${
+                        isActive
+                          ? 'border-accent bg-accent/15 shadow-lg shadow-accent/20'
+                          : 'border-primary/40 bg-background-secondary/90 hover:border-accent/60'
+                      }`}
                     >
-                      <div className="absolute top-0 right-0 bottom-0 w-10 bg-gradient-to-r from-transparent to-white/50 blur-[2px]" />
-                    </motion.div>
+                      <span className="text-2xl">{tech.icon}</span>
+                      <span className="text-foreground font-semibold">{tech.name}</span>
+                    </motion.button>
                   </div>
-                </div>
-              ))}
-            </div>
-          </BentoCard>
+                );
+              })}
+            </motion.div>
 
-          {/* Database & Cloud */}
-          <BentoCard mousePos={mousePos} className="flex flex-col justify-between bg-linear-to-br from-card/40 to-primary/5">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h3 className="text-2xl font-bold mb-1 text-foreground">Data & Scale</h3>
-                <p className="text-sm text-foreground/60">Reliable infrastructure</p>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                <Database className="w-6 h-6 text-primary" />
-              </div>
+            {/* Center core */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                animate={{ scale: [1, 1.04, 1] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-28 h-28 rounded-full border-2 border-accent/50 flex flex-col items-center justify-center font-mono text-center"
+                style={{
+                  background:
+                    'radial-gradient(circle, oklch(0.55 0.2 29 / 0.35) 0%, oklch(0.05 0 0) 70%)',
+                  boxShadow: '0 0 40px oklch(0.55 0.2 29 / 0.35)',
+                }}
+              >
+                <Zap className="text-accent mb-1" size={22} />
+                <span className="text-[10px] tracking-widest text-accent">AV.CORE</span>
+                <span className="text-lg font-black text-foreground">v2.0</span>
+              </motion.div>
             </div>
-            <div className="flex flex-col gap-6 relative mt-4">
-              <div className="absolute left-[11px] top-4 bottom-4 w-[2px] bg-white/10" />
-              {['MongoDB', 'PostgreSQL', 'Docker', 'Vercel'].map((tech, i) => (
-                <motion.div 
-                  key={tech}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15, duration: 0.5 }}
-                  className="flex items-center gap-6 relative z-10 group cursor-default"
+
+            {/* Orbit rings */}
+            <div className="absolute inset-8 rounded-full border border-primary/20" />
+            <div className="absolute inset-16 rounded-full border border-dashed border-accent/25" />
+          </motion.div>
+
+          {/* Detail panel */}
+          <div className="space-y-6">
+            <AnimatePresence mode="wait">
+              {active && (
+                <motion.div
+                  key={active.name}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="p-6 rounded-2xl border border-primary/30 bg-background-secondary/80 backdrop-blur-sm"
                 >
-                  <div className="w-6 h-6 rounded-full bg-background border-2 border-primary/50 flex items-center justify-center group-hover:border-primary group-hover:shadow-[0_0_15px_rgba(var(--color-primary),0.5)] transition-all">
-                    <div className="w-2 h-2 rounded-full bg-primary" />
+                  <div className="flex items-start gap-4 mb-4">
+                    <span className="text-4xl">{active.icon}</span>
+                    <div>
+                      <h3 className="text-2xl font-bold text-foreground">{active.name}</h3>
+                      <p className="text-sm text-accent font-medium">{active.category}</p>
+                    </div>
                   </div>
-                  <span className="font-semibold text-foreground/90 text-lg group-hover:text-primary transition-colors">{tech}</span>
+                  <p className="text-foreground-secondary mb-5 italic">&ldquo;{active.vibe}&rdquo;</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono text-muted-foreground">
+                      <span>POWER LEVEL</span>
+                      <span style={{ color: active.color }}>{active.power}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-background overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${active.power}%` }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        className="h-full rounded-full"
+                        style={{
+                          background: `linear-gradient(90deg, ${active.color}, oklch(0.82 0.16 200))`,
+                          boxShadow: `0 0 12px ${active.color}80`,
+                        }}
+                      />
+                    </div>
+                  </div>
                 </motion.div>
-              ))}
-            </div>
-          </BentoCard>
+              )}
+            </AnimatePresence>
 
-          {/* Frontend Mastery (Spans full width on bottom) */}
-          <BentoCard mousePos={mousePos} className="md:col-span-3 flex flex-col md:flex-row items-center gap-8 md:gap-16 p-8 md:p-12">
-            <div className="w-full md:w-2/5">
-               <div className="flex items-center gap-4 mb-6">
-                 <div className="p-4 rounded-2xl bg-white/5 border border-white/10 shadow-lg">
-                   <Terminal className="w-8 h-8 text-primary" />
-                 </div>
-                 <h3 className="text-3xl font-black text-foreground">Frontend Mastery</h3>
-               </div>
-               <p className="text-foreground/70 text-lg leading-relaxed mb-8">
-                 Crafting buttery-smooth animations, accessible interfaces, and pixel-perfect responsive designs using modern utility frameworks and motion libraries.
-               </p>
-               <motion.a 
-                 href="#work"
-                 whileHover={{ scale: 1.05 }}
-                 whileTap={{ scale: 0.95 }}
-                 className="inline-flex px-8 py-4 rounded-2xl bg-white text-black font-bold text-lg hover:bg-primary hover:text-white transition-all duration-300 shadow-xl shadow-white/10"
-               >
-                 View My Work
-               </motion.a>
-            </div>
-            <div className="w-full md:w-3/5 grid grid-cols-2 md:grid-cols-3 gap-4">
-               {['Tailwind CSS', 'Framer Motion', 'React Native', 'Vite', 'Next.js', 'Redux'].map((tech, i) => (
-                 <motion.div 
-                   key={tech} 
-                   initial={{ opacity: 0, y: 20 }}
-                   whileInView={{ opacity: 1, y: 0 }}
-                   viewport={{ once: true }}
-                   transition={{ delay: i * 0.1 }}
-                   className="px-6 py-5 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-primary/10 hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 group cursor-default shadow-lg"
-                 >
-                   <Braces className="w-5 h-5 text-white/40 group-hover:text-primary transition-colors" />
-                   <span className="font-semibold tracking-wide">{tech}</span>
-                 </motion.div>
-               ))}
-            </div>
-          </BentoCard>
+            <motion.button
+              type="button"
+              onClick={spinStack}
+              disabled={spinning}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white disabled:opacity-70"
+              style={{
+                background: 'linear-gradient(135deg, oklch(0.62 0.26 29), oklch(0.45 0.2 29))',
+                boxShadow: '0 0 24px oklch(0.62 0.26 29 / 0.5)',
+              }}
+            >
+              {spinning ? (
+                <>
+                  <motion.span
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 0.7, repeat: Infinity, ease: 'linear' }}
+                  >
+                    <Shuffle size={20} />
+                  </motion.span>
+                  Rolling the stack...
+                </>
+              ) : (
+                <>
+                  <Shuffle size={20} />
+                  Spin Random Stack Combo
+                </>
+              )}
+            </motion.button>
 
+            <AnimatePresence>
+              {combo && comboTechs.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="p-5 rounded-xl border border-accent/40 bg-accent/5"
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="text-accent" size={18} />
+                    <span className="text-sm font-bold text-accent tracking-wide">COMBO UNLOCKED</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {comboTechs.map((t) => (
+                      <span
+                        key={t.name}
+                        className="px-3 py-1 rounded-full text-xs font-mono border border-primary/40 bg-background-secondary"
+                      >
+                        {t.icon} {t.name}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-foreground-secondary leading-relaxed">{combo}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Marquee strip */}
+        <div className="mt-14 overflow-hidden rounded-xl border border-primary/25 bg-background-secondary/50 py-3">
+          <motion.div
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+            className="flex gap-6 whitespace-nowrap w-max"
+          >
+            {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
+              <span
+                key={`${tech.name}-${i}`}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 text-sm font-mono text-foreground-secondary"
+              >
+                <span>{tech.icon}</span>
+                {tech.name}
+              </span>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
