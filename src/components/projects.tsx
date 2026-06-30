@@ -149,35 +149,7 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Footer Stats / CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="mt-40 pt-16 border-t border-primary/20 grid grid-cols-1 md:grid-cols-3 gap-12"
-        >
-          {[
-            { label: "Completed Projects", value: "5+", icon: "🚀" },
-            { label: "Hackathon Wins", value: "SIH ×2", icon: "🏆" },
-            { label: "System Impact", value: "Global Scale", icon: "🌍" },
-          ].map((stat, i) => (
-            <div
-              key={i}
-              className="flex flex-col items-center justify-center p-8 rounded-3xl bg-background/50 border border-white/5 backdrop-blur-md hover:border-primary/30 transition-colors duration-500 group"
-            >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                {stat.icon}
-              </div>
-              <div className="text-4xl font-black bg-linear-to-br from-white to-white/60 bg-clip-text text-transparent mb-2">
-                {stat.value}
-              </div>
-              <div className="text-sm font-medium tracking-wide text-primary/80 uppercase">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </motion.div>
+
       </div>
     </section>
   );
