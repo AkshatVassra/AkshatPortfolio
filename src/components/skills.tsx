@@ -9,7 +9,7 @@ const skillCategories = [
   },
   {
     category: 'Web Development',
-    skills: ['React.js', 'Node.js', 'Express.js', 'HTML5', 'CSS3', 'JavaScript ES6+', 'MongoDB', 'MERN Stack'],
+    skills: ['React.js', 'Node.js', 'Express.js', 'HTML5', 'CSS3', 'JavaScript ES6+', 'MongoDB', 'MERN Stack', 'Fast API'],
   },
   {
     category: 'AI/ML & Data Science',
