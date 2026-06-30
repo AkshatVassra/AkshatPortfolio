@@ -72,16 +72,16 @@ export function Skills() {
             <motion.div
               key={category.category}
               variants={itemVariants}
-              className="group"
+              className="group p-8 rounded-3xl bg-card/40 backdrop-blur-md border border-white/5 hover:border-primary/20 hover:bg-card/60 transition-all duration-500 shadow-xl"
             >
               {/* Category Title */}
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-4 mb-8 border-b border-white/5 pb-4">
                 <motion.div
                   whileHover={{ scale: 1.2, rotate: 360 }}
                   transition={{ duration: 0.5 }}
-                  className="w-3 h-3 bg-gradient-to-r from-primary to-accent rounded-full"
+                  className="w-4 h-4 bg-gradient-to-tr from-primary to-accent rounded-sm rotate-45 shadow-[0_0_15px_var(--color-primary)]"
                 />
-                <h3 className="text-xl font-bold text-foreground">
+                <h3 className="text-2xl font-bold text-foreground tracking-wide">
                   {category.category}
                 </h3>
               </div>
@@ -93,15 +93,16 @@ export function Skills() {
                     key={skill}
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    whileHover={{ scale: 1.1, y: -5 }}
+                    whileHover={{ scale: 1.05, y: -4 }}
                     viewport={{ once: true }}
                     transition={{
                       delay: categoryIndex * 0.1 + skillIndex * 0.05,
                       duration: 0.4,
                     }}
-                    className="px-4 py-2 bg-background-secondary border border-primary/30 rounded-lg hover:border-accent hover:bg-background-tertiary transition-all duration-300 cursor-pointer group/skill"
+                    className="px-5 py-2.5 bg-black/40 backdrop-blur-md border border-white/10 rounded-xl hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_20px_var(--color-primary)]/30 group/skill flex items-center gap-3"
                   >
-                    <span className="text-foreground font-medium group-hover/skill:text-accent transition-colors">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover/skill:bg-primary group-hover/skill:shadow-[0_0_8px_var(--color-primary)] transition-all duration-300" />
+                    <span className="text-foreground/80 font-medium group-hover/skill:text-foreground transition-colors">
                       {skill}
                     </span>
                   </motion.div>
