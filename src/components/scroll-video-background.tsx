@@ -32,7 +32,8 @@ export function ScrollVideoBackground() {
       // Video time: only start advancing once fade begins
       if (video.duration && fadeProgress > 0) {
         const videoProgress = Math.min(Math.max((progress - 0) / 1, 0), 1);
-        targetTimeRef.current = videoProgress * video.duration;
+        const startTime = 2;
+        targetTimeRef.current = startTime + videoProgress * (video.duration - startTime);
 
         if (rafRef.current !== null) return;
         rafRef.current = requestAnimationFrame(() => {
@@ -45,7 +46,7 @@ export function ScrollVideoBackground() {
     };
 
     video.addEventListener('loadedmetadata', () => {
-      video.currentTime = 0;
+      video.currentTime = 2;
     });
 
     window.addEventListener('scroll', onScroll, { passive: true });
