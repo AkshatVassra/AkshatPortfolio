@@ -106,14 +106,18 @@ export function TechStackFun() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Orbital ring */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="relative mx-auto w-full max-w-[380px] aspect-square"
+            style={{
+              ['--orbit-radius' as any]: 'clamp(105px, 36vw, 150px)',
+            }}
           >
+            {/* Rotating container */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 48, repeat: Infinity, ease: 'linear' }}
@@ -125,9 +129,9 @@ export function TechStackFun() {
                 return (
                   <div
                     key={tech.name}
-                    className="absolute left-1/2 top-1/2"
+                    className="absolute left-1/2 top-1/2 w-24 h-24 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none"
                     style={{
-                      transform: `rotate(${angle}deg) translateX(150px)`,
+                      transform: `rotate(${angle}deg) translateX(var(--orbit-radius)) rotate(${-angle}deg)`,
                     }}
                   >
                     <motion.button
@@ -136,17 +140,24 @@ export function TechStackFun() {
                         setActive(tech);
                         setCombo(null);
                       }}
-                      whileHover={{ scale: 1.15 }}
+                      whileHover={{
+                        scale: 1.12,
+                        borderColor: tech.color,
+                        backgroundColor: `${tech.color}15`,
+                      }}
                       whileTap={{ scale: 0.95 }}
-                      style={{ transform: `rotate(-${angle}deg)` }}
-                      className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl border text-xs font-mono transition-colors ${
-                        isActive
-                          ? 'border-accent bg-accent/15 shadow-lg shadow-accent/20'
-                          : 'border-primary/40 bg-background-secondary/90 hover:border-accent/60'
-                      }`}
+                      animate={{ rotate: -360 }}
+                      transition={{ duration: 48, repeat: Infinity, ease: 'linear' }}
+                      style={{
+                        transformOrigin: 'center',
+                        borderColor: isActive ? tech.color : 'rgba(255,255,255,0.1)',
+                        backgroundColor: isActive ? `${tech.color}25` : 'rgba(255,255,255,0.03)',
+                        boxShadow: isActive ? `0 0 20px ${tech.color}35` : 'none',
+                      }}
+                      className={`pointer-events-auto flex flex-col items-center gap-1.5 px-3.5 py-2.5 rounded-xl border text-xs font-mono transition-colors text-foreground font-semibold backdrop-blur-md cursor-pointer`}
                     >
                       <span className="text-2xl">{tech.icon}</span>
-                      <span className="text-foreground font-semibold">{tech.name}</span>
+                      <span className="text-foreground font-bold tracking-wide">{tech.name}</span>
                     </motion.button>
                   </div>
                 );
@@ -158,22 +169,45 @@ export function TechStackFun() {
               <motion.div
                 animate={{ scale: [1, 1.04, 1] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-28 h-28 rounded-full border-2 border-accent/50 flex flex-col items-center justify-center font-mono text-center"
+                className="w-28 h-28 rounded-full border-2 flex flex-col items-center justify-center font-mono text-center transition-all duration-500"
                 style={{
-                  background:
-                    'radial-gradient(circle, oklch(0.55 0.2 29 / 0.35) 0%, oklch(0.05 0 0) 70%)',
-                  boxShadow: '0 0 40px oklch(0.55 0.2 29 / 0.35)',
+                  borderColor: active ? `${active.color}80` : 'oklch(0.62 0.26 29 / 0.5)',
+                  background: active
+                    ? `radial-gradient(circle, ${active.color}20 0%, oklch(0.05 0 0) 70%)`
+                    : 'radial-gradient(circle, oklch(0.55 0.2 29 / 0.35) 0%, oklch(0.05 0 0) 70%)',
+                  boxShadow: active
+                    ? `0 0 40px ${active.color}40`
+                    : '0 0 40px oklch(0.55 0.2 29 / 0.35)',
                 }}
               >
-                <Zap className="text-accent mb-1" size={22} />
-                <span className="text-[10px] tracking-widest text-accent">AV.CORE</span>
+                <Zap className="mb-1 transition-colors duration-500" size={22} style={{ color: active ? active.color : 'var(--color-accent)' }} />
+                <span className="text-[10px] tracking-widest transition-colors duration-500" style={{ color: active ? active.color : 'var(--color-accent)' }}>AV.CORE</span>
                 <span className="text-lg font-black text-foreground">v2.0</span>
               </motion.div>
             </div>
 
             {/* Orbit rings */}
-            <div className="absolute inset-8 rounded-full border border-primary/20" />
-            <div className="absolute inset-16 rounded-full border border-dashed border-accent/25" />
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 pointer-events-none"
+              style={{
+                width: 'calc(2 * var(--orbit-radius))',
+                height: 'calc(2 * var(--orbit-radius))',
+              }}
+            />
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/25 pointer-events-none"
+              style={{
+                width: 'calc(2 * var(--orbit-radius) - 40px)',
+                height: 'calc(2 * var(--orbit-radius) - 40px)',
+              }}
+            />
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dotted border-primary/10 pointer-events-none"
+              style={{
+                width: 'calc(2 * var(--orbit-radius) + 40px)',
+                height: 'calc(2 * var(--orbit-radius) + 40px)',
+              }}
+            />
           </motion.div>
 
           {/* Detail panel */}
@@ -185,7 +219,12 @@ export function TechStackFun() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className="p-6 rounded-2xl border border-primary/30 bg-background-secondary/80 backdrop-blur-sm"
+                  style={{
+                    borderColor: `${active.color}30`,
+                    boxShadow: `0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 24px ${active.color}15`,
+                    background: `linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%)`,
+                  }}
+                  className="p-6 rounded-2xl border backdrop-blur-md"
                 >
                   <div className="flex items-start gap-4 mb-4">
                     <span className="text-4xl">{active.icon}</span>
@@ -198,7 +237,7 @@ export function TechStackFun() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs font-mono text-muted-foreground">
                       <span>POWER LEVEL</span>
-                      <span style={{ color: active.color }}>{active.power}%</span>
+                      <span style={{ color: active.color }} className="font-bold">{active.power}%</span>
                     </div>
                     <div className="h-2 rounded-full bg-background overflow-hidden">
                       <motion.div
@@ -223,7 +262,7 @@ export function TechStackFun() {
               disabled={spinning}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white disabled:opacity-70"
+              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white disabled:opacity-70 cursor-pointer"
               style={{
                 background: 'linear-gradient(135deg, oklch(0.62 0.26 29), oklch(0.45 0.2 29))',
                 boxShadow: '0 0 24px oklch(0.62 0.26 29 / 0.5)',
@@ -253,7 +292,12 @@ export function TechStackFun() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="p-5 rounded-xl border border-accent/40 bg-accent/5"
+                  className="p-5 rounded-xl border backdrop-blur-md"
+                  style={{
+                    borderColor: 'oklch(0.62 0.26 29 / 0.3)',
+                    background: 'linear-gradient(135deg, oklch(0.62 0.26 29 / 0.08) 0%, oklch(0.62 0.26 29 / 0.02) 100%)',
+                    boxShadow: '0 4px 20px oklch(0.62 0.26 29 / 0.05)',
+                  }}
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <Sparkles className="text-accent" size={18} />
@@ -263,7 +307,7 @@ export function TechStackFun() {
                     {comboTechs.map((t) => (
                       <span
                         key={t.name}
-                        className="px-3 py-1 rounded-full text-xs font-mono border border-primary/40 bg-background-secondary"
+                        className="px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/5 text-foreground/90"
                       >
                         {t.icon} {t.name}
                       </span>
@@ -276,8 +320,12 @@ export function TechStackFun() {
           </div>
         </div>
 
-        {/* Marquee strip */}
-        <div className="mt-14 overflow-hidden rounded-xl border border-primary/25 bg-background-secondary/50 py-3">
+        {/* Marquee strip with fade mask */}
+        <div className="relative mt-14 overflow-hidden rounded-xl border border-white/10 bg-background-secondary/40 py-3">
+          {/* Fade gradients */}
+          <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background via-background/70 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background via-background/70 to-transparent z-10 pointer-events-none" />
+
           <motion.div
             animate={{ x: ['0%', '-50%'] }}
             transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
@@ -286,7 +334,7 @@ export function TechStackFun() {
             {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
               <span
                 key={`${tech.name}-${i}`}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 text-sm font-mono text-foreground-secondary"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/5 bg-white/5 text-sm font-mono text-foreground/80 hover:border-accent/40 transition-colors cursor-default"
               >
                 <span>{tech.icon}</span>
                 {tech.name}
