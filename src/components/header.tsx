@@ -59,7 +59,7 @@ export function Header() {
 
         {/* Resume Button */}
         <motion.a
-          href="https://drive.google.com/file/d/1AVbDDr-rWNSVQh9ra7BdKIUIPsqRMinc/view?usp=sharing"
+          href="/Akshat_Vassra.pdf"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05, boxShadow: '0 0 20px oklch(0.62 0.26 29 / 0.6)' }}
